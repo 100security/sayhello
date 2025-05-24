@@ -21,7 +21,7 @@
 
 - Linux or Unix-based system
 - [Ngrok account](https://ngrok.com/) with API token
-- [Azure Maps](https://azure.microsoft.com) with ID and PrimaryKey
+- [Azure Maps](https://azure.microsoft.com) with Client ID and Primary Key
 - Python 3.x
 
 ---
