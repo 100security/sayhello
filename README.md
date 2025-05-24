@@ -21,6 +21,7 @@
 
 - Linux or Unix-based system
 - [Ngrok account](https://ngrok.com/) with API token
+- [Azure Maps](https://azure.microsoft.com) with ID and PrimaryKey
 - Python 3.x
 
 ---
@@ -47,3 +48,4 @@ chmod +x sayhello.sh
 ![](https://www.100security.com.br/images/sayhello-09.png)
 ![](https://www.100security.com.br/images/sayhello-10a.png)
 ![](https://www.100security.com.br/images/sayhello-11.png)
+![](https://www.100security.com.br/images/sayhello-23.jpg)
