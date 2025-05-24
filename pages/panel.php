@@ -204,7 +204,7 @@
                     <p class="lead mb-4">Welcome to the SayHello dashboard.</p>
                     
                     <div class="row mt-5">
-                        <div class="col-md-6 mb-4">
+                        <div class="col-md-4 mb-4">
                             <div class="card h-100 shadow-sm">
                                 <div class="card-body text-center p-4">
                                     <i class="fas fa-images fa-3x text-primary mb-3"></i>
@@ -214,13 +214,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-4">
+                        <div class="col-md-4 mb-4">
                             <div class="card h-100 shadow-sm">
                                 <div class="card-body text-center p-4">
                                     <i class="fas fa-network-wired fa-3x text-primary mb-3"></i>
                                     <h3>IP Log Viewer</h3>
                                     <p class="text-muted">Analyze captured IP addresses</p>
                                     <a href="ip_log_viewer.php" class="btn btn-outline-primary mt-3">View</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body text-center p-4">
+                                    <i class="fas fa-street-view fa-3x text-primary mb-3"></i>
+                                    <h3>Geolocation</h3>
+                                    <p class="text-muted">View all geolocation captures</p>
+                                    <a href="geolocation.php" class="btn btn-outline-primary mt-3">View</a>
                                 </div>
                             </div>
                         </div>
